@@ -94,7 +94,7 @@ function App() {
       {numbers.length === 0 && (
         <div className="mt-4">
           <p className="text-yellow-400 text-lg">
-            Všetky čísla boli vylosované!
+            Všetky čísla boli vylosované!!!
           </p>
           <button
             onClick={resetGame}
