@@ -4,7 +4,7 @@ import Confetti from "react-confetti";
 import { useWindowSize } from "@react-hook/window-size";
 
 export default function LotteryApp() {
-  const [yellowNumbers, setYellowNumbers] = useState(
+  const [greenNumbers, setGreenNumbers] = useState(
     [...Array(100).keys()].map((n) => n + 1)
   ); // Green numbers 1-30
   const [redNumbers, setRedNumbers] = useState(
@@ -21,15 +21,15 @@ export default function LotteryApp() {
   useEffect(() => {
     if (running) {
       const id = setInterval(() => {
-        const pickYellow = Math.random() < 0.5; // 50% chance for green or blue
-        const availableNumbers = pickYellow ? yellowNumbers : redNumbers;
+        const pickGreen = Math.random() < 0.5; // 50% chance for green or blue
+        const availableNumbers = pickGreen ? greenNumbers : redNumbers;
 
         if (availableNumbers.length > 0) {
           const randomIndex = Math.floor(
             Math.random() * availableNumbers.length
           );
           setCurrentNumber(availableNumbers[randomIndex]);
-          setCurrentColor(pickYellow ? "yellow" : "red");
+          setCurrentColor(pickGreen ? "green" : "red");
         }
       }, 100); // Change number every 100ms while running
 
@@ -39,10 +39,10 @@ export default function LotteryApp() {
     }
 
     return () => clearInterval(intervalId);
-  }, [running, yellowNumbers, redNumbers]);
+  }, [running, greenNumbers, redNumbers]);
 
   const handleStart = () => {
-    if (yellowNumbers.length > 0 || redNumbers.length > 0) {
+    if (greenNumbers.length > 0 || redNumbers.length > 0) {
       setRunning(true);
       setShowConfetti(false); // Reset confetti when starting
     }
@@ -50,25 +50,23 @@ export default function LotteryApp() {
 
   const handleStop = () => {
     setRunning(false);
-    if (yellowNumbers.length > 0 || redNumbers.length > 0) {
-      const pickYellow = Math.random() < 0.5; // 50% chance for green or blue
-      const availableNumbers = pickYellow ? yellowNumbers : redNumbers;
+    if (greenNumbers.length > 0 || redNumbers.length > 0) {
+      const pickGreen = Math.random() < 0.5; // 50% chance for green or blue
+      const availableNumbers = pickGreen ? greenNumbers : redNumbers;
 
       if (availableNumbers.length > 0) {
         const randomIndex = Math.floor(Math.random() * availableNumbers.length);
         const selectedNumber = availableNumbers[randomIndex];
 
         setCurrentNumber(selectedNumber);
-        setCurrentColor(pickYellow ? "yellow" : "red");
+        setCurrentColor(pickGreen ? "green" : "red");
         setPickedNumbers([
           ...pickedNumbers,
-          { number: selectedNumber, color: pickYellow ? "yellow" : "red" },
+          { number: selectedNumber, color: pickGreen ? "green" : "red" },
         ]);
 
-        if (pickYellow) {
-          setYellowNumbers(
-            yellowNumbers.filter((num) => num !== selectedNumber)
-          );
+        if (pickGreen) {
+          setGreenNumbers(greenNumbers.filter((num) => num !== selectedNumber));
         } else {
           setRedNumbers(redNumbers.filter((num) => num !== selectedNumber));
         }
@@ -79,7 +77,7 @@ export default function LotteryApp() {
   };
 
   const resetGame = () => {
-    setYellowNumbers([...Array(100).keys()].map((n) => n + 1));
+    setGreenNumbers([...Array(100).keys()].map((n) => n + 1));
     setRedNumbers([...Array(100).keys()].map((n) => n + 1));
     setCurrentNumber(null);
     setCurrentColor(null);
@@ -97,8 +95,8 @@ export default function LotteryApp() {
         className={`text-[18rem] font-bold px-15 py-55 rounded-lg ${
           currentNumber === null
             ? "bg-gray-900"
-            : currentColor === "yellow"
-            ? "bg-yellow-300"
+            : currentColor === "green"
+            ? "bg-green-500"
             : "bg-red-500"
         }`}
       >
@@ -108,9 +106,9 @@ export default function LotteryApp() {
         <button
           onClick={handleStart}
           disabled={
-            running || (yellowNumbers.length === 0 && redNumbers.length === 0)
+            running || (greenNumbers.length === 0 && redNumbers.length === 0)
           }
-          className="px-6 py-3 bg-green-500 hover:bg-green-600 disabled:bg-gray-500 rounded-lg text-white text-lg"
+          className="px-6 py-3 bg-blue-500 hover:bg-green-600 disabled:bg-gray-500 rounded-lg text-white text-lg"
         >
           Štart
         </button>
@@ -129,7 +127,7 @@ export default function LotteryApp() {
             <span
               key={index}
               className={`px-4 py-2 text-lg font-bold rounded-lg ${
-                item.color === "yellow" ? "bg-yellow-300" : "bg-red-500"
+                item.color === "green" ? "bg-green-500" : "bg-red-500"
               }`}
             >
               {item.number}
@@ -137,7 +135,7 @@ export default function LotteryApp() {
           ))}
         </div>
       </div>
-      {yellowNumbers.length === 0 && redNumbers.length === 0 && (
+      {greenNumbers.length === 0 && redNumbers.length === 0 && (
         <div className="mt-4">
           <p className="text-yellow-400 text-lg">
             Všetky čísla boli vylosované!
