@@ -1,5 +1,7 @@
 import { useState, useEffect } from "react";
 import "./App.css";
+import Confetti from "react-confetti";
+import { useWindowSize } from "@react-hook/window-size";
 
 export default function LotteryApp() {
   const [yellowNumbers, setYellowNumbers] = useState(
@@ -13,6 +15,8 @@ export default function LotteryApp() {
   const [running, setRunning] = useState(false);
   const [intervalId, setIntervalId] = useState(null);
   const [pickedNumbers, setPickedNumbers] = useState([]); // Stores picked numbers
+  const [showConfetti, setShowConfetti] = useState(false);
+  const [width, height] = useWindowSize();
 
   useEffect(() => {
     if (running) {
@@ -40,6 +44,7 @@ export default function LotteryApp() {
   const handleStart = () => {
     if (yellowNumbers.length > 0 || redNumbers.length > 0) {
       setRunning(true);
+      setShowConfetti(false); // Reset confetti when starting
     }
   };
 
@@ -68,6 +73,8 @@ export default function LotteryApp() {
           setRedNumbers(redNumbers.filter((num) => num !== selectedNumber));
         }
       }
+      setShowConfetti(true); // 🎉 Show confetti
+      setTimeout(() => setShowConfetti(false), 5000); // Stop confetti after
     }
   };
 
@@ -78,12 +85,14 @@ export default function LotteryApp() {
     setCurrentColor(null);
     setRunning(false);
     setPickedNumbers([]);
+    setShowConfetti(false);
   };
 
   return (
     <div className="flex flex-col items-center justify-center min-h-screen bg-gray-900 text-white">
+      {showConfetti && <Confetti width={width} height={height} />}{" "}
+      {/* 🎉 Confetti Effect */}
       <h1 className="text-5xl font-bold mb-4">🎰 PSK Tombola</h1>
-
       <div
         className={`text-[18rem] font-bold px-15 py-55 rounded-lg ${
           currentNumber === null
@@ -95,7 +104,6 @@ export default function LotteryApp() {
       >
         {currentNumber !== null ? currentNumber : "??"}
       </div>
-
       <div className="mt-6 flex space-x-4">
         <button
           onClick={handleStart}
@@ -114,7 +122,6 @@ export default function LotteryApp() {
           Zastaviť
         </button>
       </div>
-
       <div className="mt-6">
         <h2 className="text-xl font-semibold">Vyžrebované čísla:</h2>
         <div className="mt-2 flex flex-wrap justify-center space-x-2">
@@ -130,7 +137,6 @@ export default function LotteryApp() {
           ))}
         </div>
       </div>
-
       {yellowNumbers.length === 0 && redNumbers.length === 0 && (
         <div className="mt-4">
           <p className="text-yellow-400 text-lg">
