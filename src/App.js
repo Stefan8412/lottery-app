@@ -100,7 +100,7 @@ function App() {
             onClick={resetGame}
             className="mt-3 px-6 py-2 bg-blue-500 hover:bg-blue-600 rounded-lg text-white"
           >
-            Reštart
+            Reštar
           </button>
         </div>
       )}
