@@ -52,7 +52,7 @@ function App() {
     <div className="flex flex-col items-center justify-center min-h-screen text-white bg-gray-900 ">
       <h1 className="text-5xl font-bold mb-4">🎰 PSK Tombola</h1>
 
-      <div className="text-6xl font-bold bg-gray-800 px-8 py-4 rounded-lg">
+      <div className="text-[18rem] font-bold px-30 py-30 rounded-lg">
         {currentNumber !== null ? currentNumber : "?"}
       </div>
 
