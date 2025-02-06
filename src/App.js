@@ -7,7 +7,7 @@ export default function LotteryApp() {
   const date = new Date();
   const year = date.getFullYear();
   const [greenNumbers, setGreenNumbers] = useState(
-    [...Array(100).keys()].map((n) => n + 1)
+    [...Array(69).keys()].map((n) => n + 1)
   ); // Green numbers 1-30
   const [redNumbers, setRedNumbers] = useState(
     [...Array(100).keys()].map((n) => n + 1)
