@@ -4,6 +4,8 @@ import Confetti from "react-confetti";
 import { useWindowSize } from "@react-hook/window-size";
 
 export default function LotteryApp() {
+  const date = new Date();
+  const year = date.getFullYear();
   const [greenNumbers, setGreenNumbers] = useState(
     [...Array(100).keys()].map((n) => n + 1)
   ); // Green numbers 1-30
@@ -148,6 +150,15 @@ export default function LotteryApp() {
           </button>
         </div>
       )}
+      <div className="flex items-center space-x-4">
+        <p className="text-sm">
+          &copy; Copyright {year} - Made with{" "}
+          <span aria-label="love" role="img">
+            💖
+          </span>{" "}
+          in Presov by PSK. All right reserved.{" "}
+        </p>
+      </div>
     </div>
   );
 }
