@@ -92,7 +92,7 @@ export default function LotteryApp() {
     <div className="flex flex-col items-center justify-center min-h-screen bg-gray-900 text-white">
       {showConfetti && <Confetti width={width} height={height} />}{" "}
       {/* 🎉 Confetti Effect */}
-      <h1 className="text-5xl font-bold mb-4">🎰 PSK Tombola</h1>
+      <h1 className="text-5xl font-bold mb-4">🎰 Deň PSK </h1>
       <div
         className={`text-[18rem] font-bold px-15 py-55 rounded-lg ${
           currentNumber === null
