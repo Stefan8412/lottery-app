@@ -34,7 +34,11 @@ export default function LotteryApp() {
 
   useEffect(() => {
     const handleKeyDown = (e) => {
-      if (e.code === "Space" || "ArrowLeft" || "ArrowRight ") {
+      if (
+        e.code === "Space" ||
+        e.code === "ArrowLeft" ||
+        e.code === "ArrowRight"
+      ) {
         e.preventDefault(); // Prevent page scroll when space is pressed
         if (!running) {
           handleStart();
@@ -158,8 +162,8 @@ export default function LotteryApp() {
   const colorClasses = {
     green: "bg-green-500",
     greenT: "bg-green-500",
-    red: "bg-red-500",
-    rose: "bg-rose-700",
+    red: "bg-red-600",
+    rose: "bg-rose-950",
     purpleT: "bg-purple-500", // use same color
     blue: "bg-blue-500",
     blueL: "bg-cyan-300",
