@@ -4,16 +4,20 @@ import Confetti from "react-confetti";
 import { useWindowSize } from "@react-hook/window-size";
 
 const COLOR_SETTINGS = {
-  green: { numbers: 69, probability: 0.4, confettiColor: "green" }, // 40%
+  green: { numbers: 100, probability: 0.4, confettiColor: "green" }, // 40%
+  greenT: { numbers: 50, probability: 0.4, confettiColor: "green" }, // 40%
   red: { numbers: 100, probability: 0.3, confettiColor: "red" }, // 30%
   rose: { numbers: 100, probability: 0.3, confettiColor: "red" }, // 30%
   purpleT: { numbers: 100, probability: 0.5, confettiColor: "purple" },
-  blue: { numbers: 50, probability: 0.2, confettiColor: "blue" }, // 20%
-  blueL: { numbers: 50, probability: 0.4, confettiColor: "blue" }, // 20%
-  orange: { numbers: 50, probability: 0.2, confettiColor: "orange" }, // 20%
-  purple: { numbers: 30, probability: 0.1, confettiColor: "purple" }, // 10%
-  yellow: { numbers: 30, probability: 0.1, confettiColor: "yellow" }, // 10%
-  brown: { numbers: 30, probability: 0.1, confettiColor: "brown" }, // 10%
+  blue: { numbers: 100, probability: 0.2, confettiColor: "blue" }, // 20%
+  blueL: { numbers: 100, probability: 0.4, confettiColor: "blue" }, // 20%
+  orange: { numbers: 100, probability: 0.2, confettiColor: "orange" }, // 20%
+  orangeT: { numbers: 50, probability: 0.2, confettiColor: "orange" }, // 20%
+  purple: { numbers: 100, probability: 0.1, confettiColor: "purple" }, // 10%
+  yellow: { numbers: 100, probability: 0.1, confettiColor: "yellow" }, // 10%
+  yellowT: { numbers: 100, probability: 0.3, confettiColor: "yellow" }, // 10%
+  brown: { numbers: 100, probability: 0.1, confettiColor: "brown" }, // 10%
+  brownT: { numbers: 100, probability: 0.4, confettiColor: "brown" }, // 10%
   stone: { numbers: 100, probability: 0.4, confettiColor: "stone" },
 };
 
@@ -49,6 +53,22 @@ export default function LotteryApp() {
     const initialPools = {};
     for (const color in COLOR_SETTINGS) {
       if (color === "purpleT") {
+        initialPools[color] = [
+          ...Array(COLOR_SETTINGS[color].numbers).keys(),
+        ].map((n) => `${n + 1}T`);
+      } else if (color === "brownT") {
+        initialPools[color] = [
+          ...Array(COLOR_SETTINGS[color].numbers).keys(),
+        ].map((n) => `${n + 1}T`);
+      } else if (color === "yellowT") {
+        initialPools[color] = [
+          ...Array(COLOR_SETTINGS[color].numbers).keys(),
+        ].map((n) => `${n + 1}T`);
+      } else if (color === "orangeT") {
+        initialPools[color] = [
+          ...Array(COLOR_SETTINGS[color].numbers).keys(),
+        ].map((n) => `${n + 1}T`);
+      } else if (color === "greenT") {
         initialPools[color] = [
           ...Array(COLOR_SETTINGS[color].numbers).keys(),
         ].map((n) => `${n + 1}T`);
@@ -137,6 +157,7 @@ export default function LotteryApp() {
 
   const colorClasses = {
     green: "bg-green-500",
+    greenT: "bg-green-500",
     red: "bg-red-500",
     rose: "bg-rose-700",
     purpleT: "bg-purple-500", // use same color
@@ -144,8 +165,11 @@ export default function LotteryApp() {
     blueL: "bg-cyan-300",
     purple: "bg-purple-500",
     orange: "bg-orange-500",
+    orangeT: "bg-orange-500",
     yellow: "bg-yellow-300",
+    yellowT: "bg-yellow-300",
     brown: "bg-yellow-700",
+    brownT: "bg-yellow-700",
     stone: "bg-stone-300",
   };
 
