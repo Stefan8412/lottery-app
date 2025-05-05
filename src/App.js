@@ -34,11 +34,7 @@ export default function LotteryApp() {
 
   useEffect(() => {
     const handleKeyDown = (e) => {
-      if (
-        e.code === "Space" ||
-        e.code === "ArrowLeft" ||
-        e.code === "ArrowRight"
-      ) {
+      if (e.code === "Space" || "ArrowLeft" || "ArrowRight") {
         e.preventDefault(); // Prevent page scroll when space is pressed
         if (!running) {
           handleStart();
