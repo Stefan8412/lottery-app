@@ -168,7 +168,7 @@ export default function LotteryApp() {
     // orangeT: "bg-orange-500",
     // yellow: "bg-yellow-300",
     // yellowT: "bg-yellow-300",
-    brown: "bg-yellow-700",
+    brown: "bg-orange-200",
     // brownT: "bg-yellow-700",
     stone: "bg-stone-300",
   };
