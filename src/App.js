@@ -66,26 +66,13 @@ export default function LotteryApp() {
     setColorPools(initialPools);
   }, []);
 
-  useEffect(() => {
-    let intervalId;
-    if (running) {
-      intervalId = setInterval(() => {
-        const { color, number } = getRandomPick();
-        setCurrentColor(color);
-        setCurrentNumber(number);
-      }, 100);
-    }
-    return () => clearInterval(intervalId);
-  }, [running, colorPools]);
-
-  const getRandomPick = () => {
+  const getRandomPick = useCallback(() => {
     const availableColors = Object.keys(colorPools).filter(
       (color) => colorPools[color].length > 0
     );
 
     if (availableColors.length === 0) return { color: null, number: null };
 
-    // Weighted random pick based on probability
     const weightedColors = availableColors.flatMap((color) =>
       Array(Math.floor(COLOR_SETTINGS[color].probability * 100)).fill(color)
     );
@@ -96,7 +83,7 @@ export default function LotteryApp() {
     const randomNumber = numbers[Math.floor(Math.random() * numbers.length)];
 
     return { color: randomColor, number: randomNumber };
-  };
+  }, [colorPools]); // Depends on the pools;
 
   const handleStart = useCallback(() => {
     if (Object.values(colorPools).some((arr) => arr.length > 0)) {
@@ -123,6 +110,17 @@ export default function LotteryApp() {
       setTimeout(() => setShowConfetti(false), 5000);
     }
   }, [currentNumber, currentColor]); // Changes if the current selection changes
+  useEffect(() => {
+    let intervalId;
+    if (running) {
+      intervalId = setInterval(() => {
+        const { color, number } = getRandomPick();
+        setCurrentColor(color);
+        setCurrentNumber(number);
+      }, 100);
+    }
+    return () => clearInterval(intervalId);
+  }, [running, colorPools, getRandomPick]);
 
   useEffect(() => {
     const handleKeyDown = (e) => {
