@@ -174,86 +174,116 @@ export default function LotteryApp() {
   };
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen bg-gray-900 text-white">
+    <div className="relative flex flex-col items-center justify-center min-h-screen overflow-hidden bg-[#0f172a] text-white p-4">
+      {/* Animated Background Elements */}
+      <div className="absolute inset-0 overflow-hidden pointer-events-none">
+        <div className="absolute -top-[10%] -left-[10%] w-[40%] h-[40%] rounded-full bg-blue-900/20 blur-[120px] animate-pulse" />
+        <div className="absolute -bottom-[10%] -right-[10%] w-[40%] h-[40%] rounded-full bg-indigo-900/20 blur-[120px] animate-pulse" />
+      </div>
+
       {showConfetti && (
         <Confetti
           width={width}
           height={height}
+          numberOfPieces={400}
+          recycle={false}
           colors={[COLOR_SETTINGS[currentColor]?.confettiColor || "white"]}
         />
       )}
 
-      <h1 className="text-5xl font-bold mb-4">🎰 Deň PSK </h1>
-
-      <div
-        className={`text-[18rem] font-bold px-15 py-55 rounded-lg ${
-          currentNumber === null
-            ? "bg-gray-900"
-            : colorClasses[currentColor] || "bg-gray-500"
-        }`}
-      >
-        {currentNumber !== null ? currentNumber : "??"}
+      {/* Header */}
+      <div className="relative z-10 text-center mb-12">
+        <h1 className="text-6xl font-black tracking-tighter bg-clip-text text-transparent bg-gradient-to-b from-white to-gray-400 drop-shadow-2xl">
+          Tombola <span className="text-blue-500">PSK</span>
+        </h1>
+        <div className="h-1 w-24 bg-blue-500 mx-auto mt-2 rounded-full shadow-[0_0_15px_rgba(59,130,246,0.5)]"></div>
       </div>
 
-      <div className="mt-6 flex space-x-4">
+      {/* Main Display Area */}
+      <div className="relative z-10 group">
+        {/* Glow effect behind the number */}
+        <div
+          className={`absolute inset-0 blur-[60px] opacity-30 transition-colors duration-500 rounded-full ${
+            currentNumber === null ? "bg-blue-900" : colorClasses[currentColor]
+          }`}
+        />
+
+        <div
+          className={`relative flex items-center justify-center w-[350px] h-[350px] md:w-[500px] md:h-[500px] rounded-[4rem] transition-all duration-300 border-t border-white/10 shadow-2xl ${
+            currentNumber === null
+              ? "bg-white/5 backdrop-blur-xl border border-white/5"
+              : `${colorClasses[currentColor]} shadow-[0_0_50px_-12px_rgba(0,0,0,0.5)]`
+          }`}
+        >
+          <span
+            className={`text-[12rem] md:text-[20rem] font-black tabular-nums tracking-tighter drop-shadow-lg ${
+              currentColor === "brown" || currentColor === "stone"
+                ? "text-gray-900"
+                : "text-white"
+            }`}
+          >
+            {currentNumber !== null ? currentNumber : "??"}
+          </span>
+        </div>
+      </div>
+
+      {/* Controls */}
+      <div className="relative z-10 mt-12 flex space-x-6">
         <button
           onClick={handleStart}
           disabled={
             running ||
             Object.values(colorPools).every((arr) => arr.length === 0)
           }
-          className="px-6 py-3 bg-blue-500 hover:bg-green-600 disabled:bg-gray-500 rounded-lg text-white text-lg"
+          className="group relative px-10 py-4 bg-white text-gray-900 font-bold text-xl rounded-2xl transition-all hover:scale-105 active:scale-95 disabled:opacity-50 disabled:hover:scale-100"
         >
-          Štart
+          <span className="relative z-10">SPUSTIŤ</span>
+          <div className="absolute inset-0 bg-white rounded-2xl blur-md group-hover:blur-lg opacity-30 transition-all"></div>
         </button>
+
         <button
           onClick={handleStop}
           disabled={!running}
-          className="px-6 py-3 bg-red-700 hover:bg-red-600 disabled:bg-gray-500 rounded-lg text-white text-lg"
+          className="px-10 py-4 bg-red-600 hover:bg-red-500 disabled:bg-gray-800 disabled:text-gray-500 font-bold text-xl rounded-2xl transition-all hover:scale-105 active:scale-95 border border-red-500/30"
         >
-          Zastaviť
+          ZASTAVIŤ
         </button>
       </div>
 
-      <div className="mt-6">
-        <h2 className="text-xl font-semibold">Vyžrebované čísla:</h2>
-        <div className="mt-2 flex flex-wrap justify-center space-x-2">
-          {pickedNumbers.map((item, index) => (
-            <span
-              key={`${item.number}-${item.color}-${index}`}
-              className={`px-4 py-2 text-lg font-bold rounded-lg ${
-                colorClasses[item.color] || "bg-gray-500"
-              }`}
-            >
-              {item.number}
-            </span>
-          ))}
+      {/* Picked Numbers Section */}
+      <div className="relative z-10 mt-16 w-full max-w-5xl">
+        <div className="flex items-center justify-center space-x-4 mb-6">
+          <div className="h-[1px] flex-1 bg-gradient-to-r from-transparent to-white/20"></div>
+          <h2 className="text-gray-400 font-medium uppercase tracking-widest text-sm">
+            História losovania
+          </h2>
+          <div className="h-[1px] flex-1 bg-gradient-to-l from-transparent to-white/20"></div>
+        </div>
+
+        <div className="flex flex-wrap justify-center gap-3 px-4">
+          {pickedNumbers
+            .slice()
+            .reverse()
+            .map((item, index) => (
+              <div
+                key={index}
+                className={`w-14 h-14 flex items-center justify-center text-lg font-bold rounded-xl shadow-lg transform hover:-translate-y-1 transition-all ${
+                  colorClasses[item.color]
+                } ${
+                  item.color === "brown" || item.color === "stone"
+                    ? "text-gray-900"
+                    : "text-white"
+                }`}
+              >
+                {item.number}
+              </div>
+            ))}
         </div>
       </div>
 
-      {Object.values(colorPools).every((arr) => arr.length === 0) && (
-        <div className="mt-4">
-          <p className="text-yellow-400 text-lg">
-            Všetky čísla boli vylosované!
-          </p>
-          <button
-            onClick={resetGame}
-            className="mt-3 px-6 py-2 bg-blue-500 hover:bg-blue-600 rounded-lg text-white"
-          >
-            Reštart losovania
-          </button>
-        </div>
-      )}
-
-      <div className="flex items-center space-x-4 mt-8">
-        <p className="text-sm">
-          &copy; Copyright {year} - Made with{" "}
-          <span aria-label="love" role="img">
-            💖
-          </span>{" "}
-          in Presov by PSK. All right reserved.{" "}
-        </p>
-      </div>
+      <footer className="relative z-10 mt-auto py-8 text-gray-600 text-xs tracking-widest uppercase">
+        &copy; {year} &bull; Prešovský Samosprávny Kraj &bull; Odbor IT
+      </footer>
     </div>
   );
 }
