@@ -140,7 +140,7 @@ export default function LotteryApp() {
     }
   };
 
-  const resetGame = () => {
+  /* const resetGame = () => {
     const newPools = {};
     for (const color in COLOR_SETTINGS) {
       newPools[color] = [...Array(COLOR_SETTINGS[color].numbers).keys()].map(
@@ -153,7 +153,7 @@ export default function LotteryApp() {
     setRunning(false);
     setPickedNumbers([]);
     setShowConfetti(false);
-  };
+  }; */
 
   const colorClasses = {
     green: "bg-green-500",
