@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import "./App.css";
 import Confetti from "react-confetti";
 import { useWindowSize } from "@react-hook/window-size";
@@ -31,22 +31,6 @@ export default function LotteryApp() {
   const [pickedNumbers, setPickedNumbers] = useState([]);
   const [showConfetti, setShowConfetti] = useState(false);
   const [width, height] = useWindowSize();
-
-  useEffect(() => {
-    const handleKeyDown = (e) => {
-      if (e.code === "Space" || "ArrowLeft" || "ArrowRight") {
-        e.preventDefault(); // Prevent page scroll when space is pressed
-        if (!running) {
-          handleStart();
-        } else {
-          handleStop();
-        }
-      }
-    };
-
-    window.addEventListener("keydown", handleKeyDown);
-    return () => window.removeEventListener("keydown", handleKeyDown);
-  }, [running, currentColor, currentNumber, colorPools]);
 
   useEffect(() => {
     // Initialize pools on first load
@@ -114,14 +98,14 @@ export default function LotteryApp() {
     return { color: randomColor, number: randomNumber };
   };
 
-  const handleStart = () => {
+  const handleStart = useCallback(() => {
     if (Object.values(colorPools).some((arr) => arr.length > 0)) {
       setRunning(true);
       setShowConfetti(false);
     }
-  };
+  }, [colorPools]); // Only changes if colorPools changes
 
-  const handleStop = () => {
+  const handleStop = useCallback(() => {
     setRunning(false);
     if (currentNumber !== null && currentColor !== null) {
       setPickedNumbers((prev) => [
@@ -138,7 +122,30 @@ export default function LotteryApp() {
       setShowConfetti(true);
       setTimeout(() => setShowConfetti(false), 5000);
     }
-  };
+  }, [currentNumber, currentColor]); // Changes if the current selection changes
+
+  useEffect(() => {
+    const handleKeyDown = (e) => {
+      if (e.code === "Space" || "ArrowLeft" || "ArrowRight") {
+        e.preventDefault(); // Prevent page scroll when space is pressed
+        if (!running) {
+          handleStart();
+        } else {
+          handleStop();
+        }
+      }
+    };
+
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, [
+    running,
+    currentColor,
+    currentNumber,
+    colorPools,
+    handleStart,
+    handleStop,
+  ]);
 
   /* const resetGame = () => {
     const newPools = {};
