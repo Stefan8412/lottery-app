@@ -4,14 +4,14 @@ import Confetti from "react-confetti";
 import { useWindowSize } from "@react-hook/window-size";
 
 const COLOR_SETTINGS = {
-  green: { numbers: 2, probability: 0.4, confettiColor: "green" }, // 40%
+  green: { numbers: 50, probability: 0.4, confettiColor: "green" }, // 40%
   /* greenT: { numbers: 50, probability: 0.4, confettiColor: "green" }, // 40% */
   // red: { numbers: 50, probability: 0.4, confettiColor: "red" }, // 30%
   // rose: { numbers: 100, probability: 0.3, confettiColor: "red" }, // 30%
   /*  purpleT: { numbers: 100, probability: 0.5, confettiColor: "purple" }, */
-  blue: { numbers: 2, probability: 0.4, confettiColor: "blue" }, // 20%
+  blue: { numbers: 50, probability: 0.4, confettiColor: "blue" }, // 20%
   // blueL: { numbers: 100, probability: 0.4, confettiColor: "blue" }, // 20%
-  orange: { numbers: 2, probability: 0.4, confettiColor: "orange" }, // 20%
+  orange: { numbers: 50, probability: 0.4, confettiColor: "orange" }, // 20%
   /* orangeT: { numbers: 50, probability: 0.2, confettiColor: "orange" }, // 20% */
   // purple: { numbers: 44, probability: 0.4, confettiColor: "purple" }, // 10%
   /*   yellow: { numbers: 100, probability: 0.1, confettiColor: "yellow" }, // 10%
