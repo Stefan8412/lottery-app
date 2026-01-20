@@ -4,21 +4,21 @@ import Confetti from "react-confetti";
 import { useWindowSize } from "@react-hook/window-size";
 
 const COLOR_SETTINGS = {
-  green: { numbers: 68, probability: 0.4, confettiColor: "green" }, // 40%
+  green: { numbers: 2, probability: 0.4, confettiColor: "green" }, // 40%
   /* greenT: { numbers: 50, probability: 0.4, confettiColor: "green" }, // 40% */
-  red: { numbers: 50, probability: 0.4, confettiColor: "red" }, // 30%
+  // red: { numbers: 50, probability: 0.4, confettiColor: "red" }, // 30%
   // rose: { numbers: 100, probability: 0.3, confettiColor: "red" }, // 30%
   /*  purpleT: { numbers: 100, probability: 0.5, confettiColor: "purple" }, */
-  blue: { numbers: 51, probability: 0.4, confettiColor: "blue" }, // 20%
+  blue: { numbers: 2, probability: 0.4, confettiColor: "blue" }, // 20%
   // blueL: { numbers: 100, probability: 0.4, confettiColor: "blue" }, // 20%
-  orange: { numbers: 49, probability: 0.4, confettiColor: "orange" }, // 20%
+  orange: { numbers: 2, probability: 0.4, confettiColor: "orange" }, // 20%
   /* orangeT: { numbers: 50, probability: 0.2, confettiColor: "orange" }, // 20% */
-  purple: { numbers: 44, probability: 0.4, confettiColor: "purple" }, // 10%
+  // purple: { numbers: 44, probability: 0.4, confettiColor: "purple" }, // 10%
   /*   yellow: { numbers: 100, probability: 0.1, confettiColor: "yellow" }, // 10%
   yellowT: { numbers: 100, probability: 0.3, confettiColor: "yellow" }, // 10% */
-  brown: { numbers: 36, probability: 0.4, confettiColor: "brown" }, // 10%
+  // brown: { numbers: 36, probability: 0.4, confettiColor: "brown" }, // 10%
   // brownT: { numbers: 100, probability: 0.4, confettiColor: "brown" }, // 10%
-  stone: { numbers: 34, probability: 0.4, confettiColor: "stone" },
+  // stone: { numbers: 34, probability: 0.4, confettiColor: "stone" },
 };
 
 export default function LotteryApp() {
@@ -68,13 +68,13 @@ export default function LotteryApp() {
 
   const getRandomPick = useCallback(() => {
     const availableColors = Object.keys(colorPools).filter(
-      (color) => colorPools[color].length > 0
+      (color) => colorPools[color].length > 0,
     );
 
     if (availableColors.length === 0) return { color: null, number: null };
 
     const weightedColors = availableColors.flatMap((color) =>
-      Array(Math.floor(COLOR_SETTINGS[color].probability * 100)).fill(color)
+      Array(Math.floor(COLOR_SETTINGS[color].probability * 100)).fill(color),
     );
 
     const randomColor =
@@ -102,7 +102,7 @@ export default function LotteryApp() {
       setColorPools((prev) => ({
         ...prev,
         [currentColor]: prev[currentColor].filter(
-          (num) => num !== currentNumber
+          (num) => num !== currentNumber,
         ),
       }));
 
@@ -163,19 +163,19 @@ export default function LotteryApp() {
   const colorClasses = {
     green: "bg-green-500",
     // greenT: "bg-green-500",
-    red: "bg-red-600",
+    // red: "bg-red-600",
     // rose: "bg-rose-950",
     // purpleT: "bg-purple-500", // use same color
     blue: "bg-blue-500",
     // blueL: "bg-cyan-300",
-    purple: "bg-purple-300",
+    // purple: "bg-purple-300",
     orange: "bg-orange-500",
     // orangeT: "bg-orange-500",
     // yellow: "bg-yellow-300",
     // yellowT: "bg-yellow-300",
-    brown: "bg-orange-200",
+    // brown: "bg-orange-200",
     // brownT: "bg-yellow-700",
-    stone: "bg-stone-300",
+    // stone: "bg-stone-300",
   };
 
   return (
